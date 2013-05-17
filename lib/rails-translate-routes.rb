@@ -295,7 +295,6 @@ class RailsTranslateRoutes
 
       requirements = route.requirements.merge LOCALE_PARAM_KEY => locale
       new_name = "#{route.name}_#{locale_suffix(locale)}" if route.name
-
       [route.app, conditions, requirements, defaults, new_name]
     end
 
@@ -333,7 +332,7 @@ class RailsTranslateRoutes
       path_without_optional_segments = final_optional_segments ? path.gsub(final_optional_segments,'') : path
       path_segments = path_without_optional_segments.split("/")
       new_path = path_segments.map{ |seg| translate_path_segment(seg, locale) }.join('/')
-      new_path = "/#{locale}#{new_path}" if add_prefix?(locale)
+      new_path = "/:locale#{new_path}" if add_prefix?(locale)
       new_path = '/' if new_path.blank?
       final_optional_segments ? new_path + final_optional_segments : new_path
     end
